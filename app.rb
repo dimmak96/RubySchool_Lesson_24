@@ -27,21 +27,21 @@ post '/visit' do
 	@hairdresser=params[:hairdresser]
 	@color=params[:color]
 
-	if @name==''
-		@error='Введите имя'
-	end
+	hh = { :username => "Введите имя",
+	    :phone => "Введите телефон",
+	    :datetime => "Введите дату и время"
+	}
 
-	if @phone==''
-		@error='Введите номер телефона'
-	end
+	hh.each do |key, value|
+		if params[key]==''
+			@error=hh[key]
+			return erb :visit
+			
+		end
+	end 
 
-	if @datetime==''
-		@error='Введите дату и время'
-	end
+	
 
-	if @error!=''
-		return erb :visit
-	end
 
 
 	f=File.open './public/users.txt', 'a'
