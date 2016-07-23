@@ -52,8 +52,25 @@ post '/visit' do
 end
 
 post '/contacts' do
+	
+
 	@email=params[:email]
 	@message=params[:message]
+
+	hh = { :email => "Введите email",
+	    :message => "Введите сообщение",
+	}
+
+	hh.each do |key, value|
+		if params[key]==''
+			@error=hh[key]
+			return erb :contacts
+			
+		end
+	end
+
+
+
 
 	f1=File.open './public/contacts.txt', 'a'
 	f1.write "Email: #{@email}, Message: #{@message}\n"
